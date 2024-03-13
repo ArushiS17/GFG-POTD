@@ -1,0 +1,57 @@
+class Solution {
+    public int[] matrixDiagonally(int[][] mat) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        int row = 0, col = 0;
+        int n = mat.length;
+
+        while (ans.size() < n * n) {
+           
+            while (row >= 0 && col < n) {
+                if (row >= 0 && col >= 0 && row < n && col < n) {
+                    ans.add(mat[row][col]);
+                    mat[row][col] = Integer.MAX_VALUE;
+                }
+                row--;
+                col++;
+            }
+
+            if (ans.size() == n * n) {
+                break;
+            }
+
+            row = Math.max(row, 0);
+            col = Math.min(col, n - 1);
+
+            while (mat[row][col] == Integer.MAX_VALUE) {
+                row++;
+            }
+
+            while (col >= 0 && row < n) {
+                if (row >= 0 && col >= 0 && row < n && col < n) {
+                    ans.add(mat[row][col]);
+                    mat[row][col] = Integer.MAX_VALUE;
+                }
+                row++;
+                col--;
+            }
+
+            if (ans.size() == n * n) {
+                break;
+            }
+
+            row = Math.min(row, n - 1);
+            col = Math.max(col, 0);
+
+            while (mat[row][col] == Integer.MAX_VALUE) {
+                col++;
+            }
+        }
+
+        int[] result = new int[ans.size()];
+        for (int i = 0; i < ans.size(); i++) {
+            result[i] = ans.get(i);
+        }
+
+        return result;
+    }
+}
