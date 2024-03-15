@@ -1,0 +1,74 @@
+class Solution {
+    
+    public Node sort(Node head) {
+        if (head == null || head.next == null) return head; // base case
+        
+        Node[] lists = splitList(head);
+        Node ahead = lists[0];
+        Node dhead = lists[1];
+        
+        dhead = reverse(dhead);
+        
+        head = merge(ahead, dhead);
+        
+        return head;
+    }
+    
+    private Node merge(Node head1, Node head2) {
+        if (head1 == null) return head2;  // base cases
+        if (head2 == null) return head1;  // base cases
+        
+        Node temp = null;
+        
+        if (head1.data < head2.data) {
+            temp = head1;  // picking the lower value
+            temp.next = merge(head1.next, head2); // recursively merging the remaining list
+        } else {
+            temp = head2;  // picking the lower value
+            temp.next = merge(head1, head2.next); // recursively merging the remaining list
+        }
+        return temp;
+    }
+    
+    private Node reverse(Node head) {
+        Node prev = null, curr = head, next = null;
+        
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        return prev;
+    }
+    
+    private Node[] splitList(Node head) {
+        Node ahead = new Node(0);
+        Node dhead = new Node(0);
+        
+        Node ascn = ahead;
+        Node dscn = dhead;
+        Node curr = head;
+        
+        while (curr != null) {
+            ascn.next = curr;
+            ascn = ascn.next;
+            curr = curr.next;
+            
+            if (curr != null) {
+                dscn.next = curr;
+                dscn = dscn.next;
+                curr = curr.next;
+            }
+        }
+        
+        ascn.next = null;
+        dscn.next = null;
+        
+        ahead = ahead.next;
+        dhead = dhead.next;
+        
+        return new Node[] {ahead, dhead};
+    }
+}
