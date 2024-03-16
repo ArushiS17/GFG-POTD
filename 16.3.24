@@ -1,0 +1,16 @@
+class Solution {
+    void deleteNode(Node del_node) {
+        // Your code here
+        Node prev = null;
+        while (del_node.next != null) {
+            int data = del_node.data;
+            del_node.data = del_node.next.data;
+            del_node.next.data = data;
+            
+            prev = del_node;
+            del_node = del_node.next;
+        }
+        
+        prev.next = null;
+    }
+}
