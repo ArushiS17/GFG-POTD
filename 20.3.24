@@ -1,0 +1,28 @@
+class Solution {
+    int ans = 0, mh = 0;
+
+    void solve(Node root, int h, int s) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            s += root.data;
+            if (h > mh) {
+                ans = s;
+                mh = h;
+            } else if (h == mh) {
+                ans = Math.max(ans, s);
+            }
+            return;
+        }
+
+        s += root.data;
+        solve(root.left, h + 1, s);
+        solve(root.right, h + 1, s);
+    }
+
+    public int sumOfLongRootToLeafPath(Node root) {
+        solve(root, 0, 0);
+        return ans;
+    }
+}
