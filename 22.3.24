@@ -1,0 +1,19 @@
+class Tree {
+    public static ArrayList<Integer> diagonalSum(Node root) {
+        Map<Integer, Integer> mp = new HashMap<>();
+        solve(root, mp, 0);
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
+            ans.add(entry.getValue());
+        }
+        return ans;
+    }
+
+    private static void solve(Node root, Map<Integer, Integer> mp, int level) {
+        if (root == null) return;
+        mp.put(level, mp.getOrDefault(level, 0) + root.data);
+
+        solve(root.left, mp, level + 1);
+        solve(root.right, mp, level);
+    }
+}
