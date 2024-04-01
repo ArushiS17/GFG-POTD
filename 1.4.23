@@ -1,0 +1,68 @@
+class Solution {
+    public long merge(List<Integer> arr, long low, long mid, long high) {
+        long[] temp = new long[(int) (high - low + 1)];
+        long k = 0;
+        long i = low;
+        long j = mid + 1;
+        long inv = 0;
+
+        while (i <= mid && j <= high) {
+            if (arr.get((int) i) <= arr.get((int) j)) {
+                temp[(int) k++] = arr.get((int) i++);
+            } else {
+                inv += mid - i + 1;
+                temp[(int) k++] = arr.get((int) j++);
+            }
+        }
+
+        while (i <= mid) {
+            temp[(int) k++] = arr.get((int) i++);
+        }
+
+        while (j <= high) {
+            temp[(int) k++] = arr.get((int) j++);
+        }
+
+        for (int x = 0; x < temp.length; x++) {
+            arr.set((int) (low + x), (int) temp[x]);
+        }
+
+        return inv;
+    }
+
+    public long mergeSort(List<Integer> arr, long low, long high) {
+        if (low >= high)
+            return 0;
+        long inv = 0;
+
+        long mid = (low + high) / 2;
+
+        inv += mergeSort(arr, low, mid);
+        inv += mergeSort(arr, mid + 1, high);
+        inv += merge(arr, low, mid, high);
+
+        return inv;
+    }
+
+    public long inversionCount(List<Integer> arr, long N) {
+        long ans = mergeSort(arr, 0, N - 1);
+        return ans;
+    }
+
+    public void inorder(Node root, List<Integer> arr) {
+        if (root != null) {
+            inorder(root.left, arr);
+            arr.add(root.data);
+            inorder(root.right, arr);
+        }
+    }
+
+    public static int pairsViolatingBST(int n, Node root) {
+        Solution solution = new Solution();
+        List<Integer> arr = new ArrayList<>();
+        solution.inorder(root, arr);
+
+        long N = n;
+        return (int) (solution.inversionCount(arr, N));
+    }
+}
