@@ -1,0 +1,21 @@
+
+class Solution {
+    int ans = Integer.MAX_VALUE;
+    
+    void solve(Node root, int[] last) {
+        if (root == null) return;
+        
+        solve(root.left, last);
+        if (last[0] != -1) {
+            ans = Math.min(ans, root.data - last[0]);
+        }
+        last[0] = root.data;
+        solve(root.right, last);
+    }
+    
+    int absolute_diff(Node root) {
+        int[] last = {-1}; 
+        solve(root, last);
+        return ans;
+    }
+}
