@@ -1,0 +1,17 @@
+class Solution {
+
+    public static long sumSubstrings(String s) {
+        long prev = 0, curr = 0, ans = 0;
+        long mod = 1000000007; // 10^9 + 7
+        
+        for (int i = 0; i < s.length(); i++) {
+            curr = (s.charAt(i) - '0') * (i + 1) + prev * 10;
+            curr %= mod;
+            ans += curr;
+            ans %= mod;
+            prev = curr;
+        }
+        
+        return ans;
+    }
+}
