@@ -1,0 +1,30 @@
+//User function Template for Java
+
+class Solution {
+    public int LIS(int[] arr) {
+        int n = arr.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (arr[i] > arr[j] && arr[i] - arr[j] >= i - j) {
+                    dp[i] = Math.max(dp[i], 1 + dp[j]);
+                }
+            }
+        }
+        
+        int maxi = 0;
+        for (int num : dp) {
+            maxi = Math.max(maxi, num);
+        }
+        
+        return maxi;
+    }
+
+    public int min_operations(int[] nums) {
+        int l = LIS(nums);
+        int n = nums.length;
+        return n - l;
+    }
+}
