@@ -1,0 +1,22 @@
+class Solution {
+    static int help(int i, int j, int m, int n, int[][] points, int[][] dp) {
+        if (i == m - 1 && j == n - 1)
+            return Math.max(1, 1 - points[i][j]); // Adjusted to handle cases when points[i][j] > 1
+        if (i == m || j == n)
+            return Integer.MAX_VALUE;
+        if (dp[i][j] != -1)
+            return dp[i][j];
+        int a = help(i, j + 1, m, n, points, dp);
+        int b = help(i + 1, j, m, n, points, dp);
+        return dp[i][j] = Math.max(1, Math.min(a, b) - points[i][j]); // Corrected calculation
+    }
+
+    public int minPoints(int[][] points, int m, int n) {
+        // Your code goes here
+        int[][] dp = new int[m][n];
+        for (int[] temp : dp)
+            Arrays.fill(temp, -1);
+        return help(0, 0, m, n, points, dp);
+    }
+}
+
