@@ -1,0 +1,25 @@
+class Solution {
+    public static int[] countElements(int a[], int b[], int n, int query[], int q) {
+        // Your code goes here
+        int maxi = 0;
+        for (int i = 0; i < n; i++) {
+            maxi = Math.max(maxi, Math.max(a[i], b[i]));
+        }
+
+        int[] arr = new int[maxi + 1];
+        for (int i = 0; i < n; i++) {
+            arr[b[i]]++;
+        }
+
+        for (int i = 1; i <= maxi; i++) {
+            arr[i] += arr[i - 1];
+        }
+
+        int[] ans = new int[q];
+        for (int i = 0; i < q; i++) {
+            ans[i] = arr[a[query[i]]];
+        }
+
+        return ans;
+    }
+}
