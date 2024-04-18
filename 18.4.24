@@ -1,0 +1,27 @@
+class Solution
+{
+    //Function to find two repeated elements.
+    public int[] twoRepeated(int arr[], int n)
+    {
+        // Your code here
+        int[] array = new int[2];
+        int k = 0;
+        
+        boolean[] track = new boolean[n];
+        
+        for (int j = 0; j < n; j++) {
+            track[j] = true;
+        }
+        
+        for (int i = 0; i < n + 2; i++) {
+            if (track[arr[i]-1] == true) {
+                track[arr[i]-1] = false;
+            } else {
+                array[k] = arr[i];
+                k++;
+            }
+        }
+        return array;
+    }
+    
+}
