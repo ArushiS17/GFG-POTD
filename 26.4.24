@@ -1,0 +1,16 @@
+class Solution {
+    public int[] FindExitPoint(int n, int m, int[][] matrix) {
+        int i = 0, j = 0, k = 0;
+        int[] dx = {0, 1, 0, -1};
+        int[] dy = {1, 0, -1, 0};
+        while (i >= 0 && j >= 0 && i < n && j < m) {
+            if (matrix[i][j] == 1) {
+                matrix[i][j] = 0;
+                k = (k + 1) % 4;
+            }
+            i += dx[k];
+            j += dy[k];
+        }
+        return new int[]{i - dx[k], j - dy[k]};
+    }
+}
