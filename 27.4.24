@@ -1,0 +1,54 @@
+class Solution {
+    // Function to sort the given doubly linked list using Merge Sort.
+    static Node sortDoubly(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        Node mid = getMid(head);
+        Node nextToMid = mid.next;
+        mid.next = null;
+        nextToMid.prev = null;
+
+        Node left = sortDoubly(head);
+        Node right = sortDoubly(nextToMid);
+
+        return merge(left, right);
+    }
+
+    static Node merge(Node left, Node right) {
+        if (left == null) {
+            return right;
+        }
+        if (right == null) {
+            return left;
+        }
+
+        Node result;
+        if (left.data <= right.data) {
+            result = left;
+            result.next = merge(left.next, right);
+            if (result.next != null) {
+                result.next.prev = result;
+            }
+        } else {
+            result = right;
+            result.next = merge(left, right.next);
+            if (result.next != null) {
+                result.next.prev = result;
+            }
+        }
+
+        return result;
+    }
+
+    static Node getMid(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+}
