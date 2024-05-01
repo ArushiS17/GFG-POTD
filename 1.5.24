@@ -1,0 +1,26 @@
+class Solution {
+    
+    public Node arrangeCV(Node head){
+        Node dummy1 = new Node('-');
+        Node ptr1 = dummy1;
+        Node dummy2 = new Node('-'); 
+        Node ptr2 = dummy2;
+        
+        for (Node curr = head; curr != null; curr = curr.next) {
+            char c = curr.data;
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+                ptr1.next = curr;
+                ptr1 = ptr1.next;
+            } else {
+                ptr2.next = curr;
+                ptr2 = ptr2.next;
+            }
+        }
+        
+        ptr1.next = dummy2.next;
+        ptr2.next = null; 
+        
+        Node newHead = dummy1.next;
+        return newHead;
+    }
+}
