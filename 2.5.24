@@ -1,0 +1,37 @@
+class Tree {
+    public void serializeUtil(Node root, ArrayList<Integer> A) {
+        if (root == null) {
+            A.add(-1);
+            return;
+        }
+
+        A.add(root.data);
+
+        serializeUtil(root.left, A);
+        serializeUtil(root.right, A);
+    }
+
+    public ArrayList<Integer> serialize(Node root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        serializeUtil(root, list);
+        return list;
+    }
+
+    public Node constructTree(ArrayList<Integer> A, int[] index) {
+        if (index[0] == A.size() || A.get(index[0]) == -1) {
+            index[0]++;
+            return null;
+        }
+        Node root = new Node(A.get(index[0]));
+        index[0]++;
+
+        root.left = constructTree(A, index);
+        root.right = constructTree(A, index);
+        return root;
+    }
+
+    public Node deSerialize(ArrayList<Integer> A) {
+        int[] index = {0}; 
+        return constructTree(A, index);
+    }
+}
