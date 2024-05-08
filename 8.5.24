@@ -1,0 +1,29 @@
+class Solution {
+    public static ArrayList<ArrayList<Integer>> Paths(Node root) {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer> ds = new ArrayList<>();
+        solve(root, ans, ds);
+        return ans;
+    }
+
+    public static void solve(Node root, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> ds) {
+        if (root == null) return;
+
+        ds.add(root.data);
+
+        if (root.left == null && root.right == null) {
+            ans.add(new ArrayList<>(ds));
+            return;
+        }
+
+        if (root.left != null) {
+            solve(root.left, ans, ds);
+            ds.remove(ds.size() - 1); // Backtrack after exploring left subtree
+        }
+
+        if (root.right != null) {
+            solve(root.right, ans, ds);
+            ds.remove(ds.size() - 1); // Backtrack after exploring right subtree
+        }
+    }
+}
