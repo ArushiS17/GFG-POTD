@@ -1,0 +1,13 @@
+class Solution {
+    static int minSteps(int d) {
+        if (d == 0)
+            return 0;
+        int sum = 0;
+        int move = 1;
+        while (sum < d || (sum - d) % 2 != 0) {
+            sum += move;
+            move++;
+        }
+        return move - 1;
+    }
+}
